@@ -125,5 +125,6 @@ def preprocess_datasets(uav="dataset/RGB/uav_images/", sat="dataset/RGB/sat_imag
     dataloader_eval = DataLoader(eval_set, batch_size=batch_size, shuffle=False)
     preprocess_and_save_dataset("processed_eval/", dataloader_eval, 1)
 
+
 if __name__ == "__main__":
     preprocess_datasets()
