@@ -1,3 +1,5 @@
+from math import ceil
+
 import numpy as np
 from torch.utils.data import DataLoader
 from torchvision.io import read_image
@@ -91,6 +93,7 @@ def preprocess_and_save_dataset(path, dataloader, repeat_factor=1):
             with open(path + str(counter) + ".pkl", 'wb') as outp:
                 pickle.dump(inverted_data, outp, pickle.HIGHEST_PROTOCOL)
                 counter += 1
+            print("Finished writing file number %d" % (counter - 1))
 
 
 def prep_img(img_path):
@@ -106,7 +109,7 @@ def prep_img(img_path):
 
 
 def preprocess_datasets(uav="dataset/RGB/uav_images/", sat="dataset/RGB/sat_images/",
-                        fsat="dataset/RGB/false_sat_images/"):
+                        fsat="dataset/RGB/false_sat_images/", repeat_factor = 4):
     seed = 13
     np.random.seed(seed)
     correct_names_sat = np.array(os.listdir(sat))
@@ -118,12 +121,14 @@ def preprocess_datasets(uav="dataset/RGB/uav_images/", sat="dataset/RGB/sat_imag
     batch_size = 32
     dataset_augmented = SiameseDataset(df_train_upscaled.values, transform=get_augment_transform())
     dataloader_augmented = DataLoader(dataset_augmented, batch_size=batch_size, shuffle=True)
-    preprocess_and_save_dataset("processed_dataset_augmented/", dataloader_augmented, 4)
+    expected_output_files = ceil(len(df_train_upscaled.index) / 32) * 2 * repeat_factor
+    print("Number of expected files in the output %d" % expected_output_files)
+    preprocess_and_save_dataset("output/processed_dataset_augmented/", dataloader_augmented, repeat_factor)
     df_test = get_df_split(ctest, ftest, 3, uav, sat, fsat)
     df_test.to_csv("df_test.csv")
     eval_set = SiameseDataset(df_test.values, transform=get_common_transform())
     dataloader_eval = DataLoader(eval_set, batch_size=batch_size, shuffle=False)
-    preprocess_and_save_dataset("processed_eval/", dataloader_eval, 1)
+    preprocess_and_save_dataset("output/processed_eval/", dataloader_eval, 1)
 
 
 if __name__ == "__main__":

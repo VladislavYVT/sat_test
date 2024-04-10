@@ -15,8 +15,8 @@ else:
 device = torch.device(dev)
 
 
-#train_max_index should be defined by counting files in the directory, but for now it should be fine
-def train_model(model, num_epochs, train_max_index, path_train, weight_n, lr):
+# train_max_index should be defined by counting files in the directory, but for now it should be fine
+def train_model(model, num_epochs, train_max_index, path_train, weight_n, lr, path_test, test_max_index=37):
     weight = tensor([weight_n]).to(device)
     criterion = nn.BCELoss(weight=weight)
     optimizer = optim.Adam(model.parameters(), lr=lr)
@@ -57,7 +57,8 @@ def train_model(model, num_epochs, train_max_index, path_train, weight_n, lr):
                 running_loss = 0.0
             loading_time_start = time.time()
         model.eval()
-        loss_train, loss_test, acc_train, acc_test = evaluate_model_prep(model, criterion, True)
+        loss_train, loss_test, acc_train, acc_test = evaluate_model_prep(model, criterion, True, train_max_index,
+                                                                         test_max_index, path_train, path_test)
         print('\n loss train: %.3f; acc train %.3f \n loss test %.3f acc test %.3f' %
               (loss_train, acc_train * 100, loss_test, acc_test * 100))
         model.train()
@@ -94,12 +95,10 @@ def get_predictions_and_metrics(model, threshold=0.5):
     return predict_labels, correct_labels
 
 
-def evaluate_model_prep(model, criterion=nn.BCELoss(weight=tensor([13])), disable_train=False):
+def evaluate_model_prep(model, criterion=nn.BCELoss(weight=tensor([13])), disable_train=False, train_max_index=1,
+                        test_max_index=1, path_train="output/processed_dataset/", path_test="output/processed_eval/"):
+
     criterion_upd = criterion.to(device)
-    path_train = "processed_dataset/"
-    train_max_index = 180
-    path_test = "processed_eval/"
-    test_max_index = 37
     loss1 = 0.
     acc1 = 0.
     if not disable_train:
@@ -133,6 +132,6 @@ def model_eval_prep(model, path, max_index, criterion):
 
 if __name__ == "__main__":
     model = SiameseResNet()
-    model = train_model(model, 1, 679, "processed_dataset_augmented/", 5, 0.00001)
-    model = train_model(model, 4, 679, "processed_dataset_augmented/", 5, 0.0000001)
+    model = train_model(model, 2, 679, "output/processed_dataset_augmented/", 3, 0.00001, "output/processed_eval/", 37)
+    model = train_model(model, 7, 679, "output/processed_dataset_augmented/", 3, 0.0000001, "output/processed_eval/", 37)
     torch.save(model.state_dict(), "output/siamese_model.pt")
