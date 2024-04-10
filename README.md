@@ -13,7 +13,9 @@ Overall, the task I formulated for myself is a classification of pairs of images
 It would require two pieces - feature extraction and classification
 Then, followed the choice of ML method.
 Feature extraction can be done by some sort of descriptor method, like SIFT, SURF etc. Or it can be done by NNs
-Then for SIFT/SURF there are algorithms to measure the distance between key points. For NNs, the option is to build some architecture of NN that would have at least 2 feature extractors and some classification layers on top.
+Then for SIFT/SURF there are algorithms to measure the distance between key points. It also has the additional benefit of being somewhat explainable, with the potential to match exact key points.
+
+For NNs, the option is to build some architecture of NN that would have at least 2 feature extractors and some classification layers on top. NNs usually excel at the correctness of their predictions.
 
 I've tried using descriptors but didn't achieve much success there.
 So, this project contains an NN solution.
@@ -30,7 +32,7 @@ Further work would include:
 - Fine-tuning feature extraction, as they were frozen during the training of this task
 - Exploring triplet loss/architecture with more feature extractors, like adding a gray input, or rotated input
 - Investigating on a layer basis, what is active when produced similar responses in non-similar pairs
-
+- Figure out why SIFT didn't work (which is the highest on my list, and what I plan to do after this submission either way)
 
 
 
