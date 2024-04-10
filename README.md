@@ -9,10 +9,15 @@ My model lies in the output named siamese_model.pt, and the example of using it 
 
 But overall I'll describe the process of work here
 First was preparing the dataset, which consisted of creating pairs of images that are similar, and those that are not similar, and marking them correspondingly.
+
 Overall, the task I formulated for myself is a classification of pairs of images, where the image is either 1 if it is a pair of the same location and 0 if it's not
+
 It would require two pieces - feature extraction and classification
-Then, followed the choice of ML method.
+
+Now, for them, it's important to choose the proper methods.
+
 Feature extraction can be done by some sort of descriptor method, like SIFT, SURF etc. Or it can be done by NNs
+
 Then for SIFT/SURF there are algorithms to measure the distance between key points. It also has the additional benefit of being somewhat explainable, with the potential to match exact key points.
 
 For NNs, the option is to build some architecture of NN that would have at least 2 feature extractors and some classification layers on top. NNs usually excel at the correctness of their predictions.
@@ -31,7 +36,7 @@ Further work would include:
 - Additional data augmentation
 - Fine-tuning feature extraction, as they were frozen during the training of this task
 - Exploring triplet loss/architecture with more feature extractors, like adding a gray input, or rotated input
-- Investigating on a layer basis, what is active when produced similar responses in non-similar pairs
+- Investigating on a layer basis, what is active when producing similar responses in non-similar pairs
 - Figure out why SIFT didn't work (which is the highest on my list, and what I plan to do after this submission either way)
 
 
