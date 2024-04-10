@@ -71,3 +71,5 @@ if __name__ == "__main__":
     model = load_model()
     counter_1 = evaluate_same_names(model, uav, sat)
     counter_2 = evaluate_against_fsat_randoms(model, uav, fsat)
+    print("number of misclassifications on correct %d" % counter_1)
+    print("number of misclassifications on incorrect %d" % counter_2)

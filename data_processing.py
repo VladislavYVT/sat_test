@@ -116,7 +116,7 @@ def preprocess_datasets(uav="dataset/RGB/uav_images/", sat="dataset/RGB/sat_imag
     false_names = np.array(os.listdir(fsat))
     ctrain, ctest = train_test_split(correct_names_sat, test_size=0.2, shuffle=True, random_state=seed)
     ftrain, ftest = train_test_split(false_names, test_size=0.2, shuffle=True, random_state=seed)
-    df_train_upscaled = get_df_split_upscaled(ctrain, ftrain, 3, uav, sat, fsat)
+    df_train_upscaled = get_df_split_upscaled(ctrain, ftrain, 7, uav, sat, fsat)
 
     batch_size = 32
     dataset_augmented = SiameseDataset(df_train_upscaled.values, transform=get_augment_transform())

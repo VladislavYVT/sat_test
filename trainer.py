@@ -132,6 +132,6 @@ def model_eval_prep(model, path, max_index, criterion):
 
 if __name__ == "__main__":
     model = SiameseResNet()
-    model = train_model(model, 2, 679, "output/processed_dataset_augmented/", 3, 0.00001, "output/processed_eval/", 37)
-    model = train_model(model, 7, 679, "output/processed_dataset_augmented/", 3, 0.0000001, "output/processed_eval/", 37)
+    model = train_model(model, 2, 1359, "output/processed_dataset_augmented/", 3, 0.00001, "output/processed_eval/", 37)
+    model = train_model(model, 7, 1359, "output/processed_dataset_augmented/", 3, 0.0000001, "output/processed_eval/", 37)
     torch.save(model.state_dict(), "output/siamese_model.pt")
