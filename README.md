@@ -4,7 +4,7 @@ This project expects the dataset to be in the root of the project, in the format
 
 To check work in progress, please refer to notebooks in the working_notebooks folder. Reading order test_task, followed by dataset_making and nn_trying, and SIFT 
 to recreate the experiment, please copy the dataset to this project, and run data_processing.py followed by the trainer.py, which will produce a model in the output
-My model lies in the output named siamese_model.pt, and the example of using it is in post_train_evaluation.py.
+My model lies in the [output](https://drive.google.com/file/d/1f-WuGhsPsizwfmDkbkJXZ_meUa8RtL-6/view?usp=sharing) named siamese_model.pt, and the example of using it is in post_train_evaluation.py.
 
 
 But overall I'll describe the process of work here
@@ -31,6 +31,8 @@ Tried reducing LR, using different optimizers and weights for classes.
 
 In the end, my metrics aren't particularly satisfying to me, as the accuracy of prediction is about 83ish, and it seems like a task where 99% should be easily achievable, I have plans for further work, but I'm not sure about the deadline of the solution, so I have to wrap it up at some point
 The solution overall is more prone to overclaiming with only 3% of correct pairs being identified as incorrect and almost 25% of incorrect being identified as correct as a result of testing. I also did not find any evidence of it being the result of overfitting, as errors were somewhat uniform between the train and test split of the data. 
+UPD:
+with new sampling (significantly increased using fsat images) it's around 10%/10% errors
 
 Further work would include:
 - Additional data augmentation
